@@ -1,6 +1,5 @@
-package evaluacion2.evaluacion2.model;
+package evaluacion2.evaluacion2.repository;
 
-public interface LibroRepository extends JpaRepository<Libro, Integer> {
-
+public interface LibroRepository {
 
 }
