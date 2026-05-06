@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -27,4 +28,12 @@ public class Biblioteca {
     @ManyToOne
     @JoinColumn(name = "id_comuna") // FK que apunta a la tabla Comuna
     private Comuna comuna;
+
+    @OneToMany
+    @JoinColumn(name = "prestamo_id")
+    private Prestamo prestamo;
+
+    @OneToMany
+    @JoinColumn(name = "empleado_id")
+    private Empleado empleado;
 }

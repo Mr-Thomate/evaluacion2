@@ -5,7 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -24,7 +24,8 @@ public class Region {
 
     @NotBlank(message="No puede estar vacio")
     private String nombreRegion;
-    @ManyToOne
-    @JoinColumn(name="id_region")
-    private Region region;
+
+    @OneToMany
+    @JoinColumn(name = "comuna_id")
+    private Comuna comuna;
 }

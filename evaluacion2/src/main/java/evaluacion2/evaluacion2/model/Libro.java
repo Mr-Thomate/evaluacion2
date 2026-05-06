@@ -1,11 +1,15 @@
 package evaluacion2.evaluacion2.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Data;
@@ -19,14 +23,30 @@ public class Libro {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Integer isbn;
-    @NotBlank(message = "el libro debe tener un titulo")
+
+    @NotBlank(message = "El libro debe tener un titulo")
+    @Size(min = 3, max = 30, message = "El titulo debe contener entre 3 y 30 caracteres")
+    @Column(nullable = false, length = 30)
     private String titulo;
-    @NotBlank(message = "el libro debe tener una editorial")
-    private String editorial;
-    @NotBlank(message = "el libro debe tener un autor")
-    private String autor;
-    @NotBlank(message = "el libro debe tener una fecha de publicacion")
+
+    @NotBlank(message = "El libro debe tener una fecha de publicacion")
+    @Size(min = 10, max = 10, message = "La fecha debe estar en formato 'dd-mm-yyyy'")
     private String fecha_publicacion;
-    @NotBlank(message = "el libro debe tener una categoria")
-    private String categoria;
+
+
+    @OneToMany
+    @JoinColumn(name = "libro_categoria_id")
+    private LibroCategoria libroCategoria;
+
+    @OneToMany
+    @JoinColumn(name = "libro_editorial_id")
+    private LibroEditorial libroEditorial;
+
+    @OneToMany
+    @JoinColumn(name = "libro_autor_id")
+    private LibroAutor libroAutor;
+
+    @OneToMany
+    @JoinColumn(name = "prestamo_id")
+    private Prestamo prestamo;
 }
