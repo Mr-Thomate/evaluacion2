@@ -11,17 +11,18 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "libro_autor")
-public class LibroAutor {
+@Table(name = "libro_categoria")
+public class LibroCategoria {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "autor_id")
-    private Autor autor;
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
 
     @ManyToOne
-    @JoinColumn(name = "libro_isbn")
+    @JoinColumn(name = "libro_id")
     private Libro libro;
+
 }

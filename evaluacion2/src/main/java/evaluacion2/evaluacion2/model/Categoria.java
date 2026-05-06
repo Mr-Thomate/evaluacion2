@@ -7,7 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -16,20 +16,20 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "autor")
+@Table(name = "categoria")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Autor {
+public class Categoria {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank(message = "El autor/a debe tener nombre")
-    @Size(min = 3, max = 30, message = "El nombre debe estar entre 3 y 30 caracteres")
-    @Column(nullable = false, length = 30)
+    @NotBlank(message = "La categoria debe tener nombre")
+    @Size(min = 3, max = 40, message = "El nombre debe tener entre 3 y 40 caracteres")
+    @Column(nullable = false, length = 40)
     private String nombre;
 
-    @ManyToOne
-    @JoinColumn(name = "libro_autor_id")
-    private LibroAutor libroAutor;
+    @OneToMany
+    @JoinColumn(name = "libro_categoria_id")
+    private LibroCategoria libroCategoria;
 }

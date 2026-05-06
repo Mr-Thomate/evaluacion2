@@ -7,21 +7,25 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "libro_autor")
-public class LibroAutor {
+@Table(name = "libro_editorial")
+@AllArgsConstructor
+@NoArgsConstructor
+public class LibroEditorial {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "autor_id")
-    private Autor autor;
+    @JoinColumn(name = "editorial_id")
+    private Editorial editorial;
 
     @ManyToOne
-    @JoinColumn(name = "libro_isbn")
+    @JoinColumn(name = "libro_id")
     private Libro libro;
 }
