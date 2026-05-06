@@ -30,6 +30,6 @@ public class Autor {
     private String nombre;
 
     @ManyToOne
-    @JoinColumn(name = "autor_libro_id")
+    @JoinColumn(name = "libro_autor_id")
     private AutorLibro autorLibro;
 }
