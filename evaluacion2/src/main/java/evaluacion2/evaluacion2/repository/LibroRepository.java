@@ -4,15 +4,26 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import evaluacion2.evaluacion2.model.Libro;
-import evaluacion2.evaluacion2.model.LibroCategoria;
-import evaluacion2.evaluacion2.model.LibroEditorial;
 
 @Repository
 public interface LibroRepository extends JpaRepository<Libro, Integer>{
-    
-    
+    // Busqueda de libro por autor
+    @Query("SELECT l FROM Libro l JOIN l.libroAutor la JOIN la.autor a WHERE a.nombre = :nombreAutor")
+    List<Libro> findByNombreAutor(@Param("nombreAutor") String nombreAutor);
 
+    // Busqueda de libro por Categoria
+    @Query("SELECT l FROM Libro l JOIN l.libroCategoria lc JOIN lc.categoria c WHERE c.nombre = :nombreCategoria")
+    List<Libro> findByNombreCategoria(@Param("nombreCategoria") String nombreCategoria);
+
+    // Busqueda de libro por Editorial
+    @Query("SELECT l FROM Libro l JOIN l.libroEditorial le JOIN le.editorial e WHERE e.nombre = :nombreEditorial")
+    List<Libro> findByNombreEditorial(@Param("nombreEditorial") String nombreEditorial);
+
+    // Busqueda de libro por Prestamo asociado
+    @Query("SELECT l FROM Libro l JOIN l.prestamo p WHERE p.id = :idPrestamo")
+    List<Libro> findByIdPrestamo(@Param("idPrestamo") Integer idPrestamo);
 }
