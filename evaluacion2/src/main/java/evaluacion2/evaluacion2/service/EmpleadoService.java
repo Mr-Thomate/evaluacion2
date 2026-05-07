@@ -45,10 +45,12 @@ public class EmpleadoService {
         dto.setSapellido(emp.getSapellido());
 
         if (emp.getBiblioteca() != null) {
-            dto.setIdBiblioteca(emp.getBiblioteca().getnombreBiblioteca());
+            dto.setNombreBiblioteca(emp.getBiblioteca().getNombreBiblioteca());
         }
         if (emp.getContrato() != null) {
-            dto.setIdContrato(emp.getContrato().getId());
+            dto.setEstadoContrato("Con contrato");
+        }else {
+            dto.setEstadoContrato("Sin contrato");
         }
 
         return dto;
