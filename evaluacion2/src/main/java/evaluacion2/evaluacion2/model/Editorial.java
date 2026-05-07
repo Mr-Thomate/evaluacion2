@@ -1,11 +1,12 @@
 package evaluacion2.evaluacion2.model;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -29,8 +30,7 @@ public class Editorial {
     @Column(nullable = false, length = 30)
     private String nombre;
 
-    @OneToMany
-    @JoinColumn(name = "libro_editorial_id")
-    private LibroEditorial libroEditorial;
+    @OneToMany(mappedBy = "editorial")
+    private List<LibroEditorial> libroEditorial;
 
 }

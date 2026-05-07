@@ -24,5 +24,4 @@ public class LibroCategoria {
     @ManyToOne
     @JoinColumn(name = "libro_id")
     private Libro libro;
-
 }

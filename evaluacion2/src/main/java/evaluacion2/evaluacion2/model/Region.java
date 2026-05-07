@@ -1,10 +1,11 @@
 package evaluacion2.evaluacion2.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -25,7 +26,6 @@ public class Region {
     @NotBlank(message="No puede estar vacio")
     private String nombreRegion;
 
-    @OneToMany
-    @JoinColumn(name = "comuna_id")
-    private Comuna comuna;
+    @OneToMany(mappedBy = "region")
+    private List<Comuna> comuna;
 }
