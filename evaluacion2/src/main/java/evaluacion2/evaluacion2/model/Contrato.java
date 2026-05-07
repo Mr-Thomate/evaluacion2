@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -44,7 +43,6 @@ public class Contrato {
     @Column(nullable = false, length = 8)
     private int sueldo;
 
-    @OneToOne
-    @JoinColumn(name = "empleado_id")
+    @OneToOne(mappedBy = "contrato")
     private Empleado empleado;
 }

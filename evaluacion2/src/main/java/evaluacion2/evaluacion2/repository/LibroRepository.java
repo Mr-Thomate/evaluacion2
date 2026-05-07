@@ -12,13 +12,7 @@ import evaluacion2.evaluacion2.model.LibroEditorial;
 
 @Repository
 public interface LibroRepository extends JpaRepository<Libro, Integer>{
-    @Query("SELECT a FROM Autor a WHERE a.nombre = :nombreAutor")
-    List<Libro> findByLibroAutor(String nombreAutor);
-
-    List<Libro> findByLibroEditorial(LibroEditorial libroEditorial);
-
-    List<Libro> findByLibroCategoria(LibroCategoria libroCategoria);
-
+    
     
 
 }

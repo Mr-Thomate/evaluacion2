@@ -1,5 +1,7 @@
 package evaluacion2.evaluacion2.model;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,7 +10,6 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -34,19 +35,15 @@ public class Libro {
     private String fecha_publicacion;
 
 
-    @OneToMany
-    @JoinColumn(name = "libro_categoria_id")
-    private LibroCategoria libroCategoria;
+    @OneToMany(mappedBy = "libro")
+    private List<LibroCategoria> libroCategoria;
 
-    @OneToMany
-    @JoinColumn(name = "libro_editorial_id")
-    private LibroEditorial libroEditorial;
+    @OneToMany(mappedBy = "libro")
+    private List<LibroEditorial> libroEditorial;
 
-    @OneToMany
-    @JoinColumn(name = "libro_autor_id")
-    private LibroAutor libroAutor;
+    @OneToMany(mappedBy = "libro")
+    private List<LibroAutor> libroAutor;
 
-    @OneToMany
-    @JoinColumn(name = "prestamo_id")
-    private Prestamo prestamo;
+    @OneToMany(mappedBy = "libro")
+    private List<Prestamo> prestamo;
 }

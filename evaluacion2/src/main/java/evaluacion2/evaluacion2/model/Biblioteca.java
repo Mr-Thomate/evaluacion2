@@ -1,5 +1,7 @@
 package evaluacion2.evaluacion2.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,11 +31,9 @@ public class Biblioteca {
     @JoinColumn(name = "id_comuna")
     private Comuna comuna;
 
-    @OneToMany
-    @JoinColumn(name = "prestamo_id")
-    private Prestamo prestamo;
+    @OneToMany(mappedBy = "biblioteca")
+    private List<Prestamo> prestamo;
 
-    @OneToMany
-    @JoinColumn(name = "empleado_id")
-    private Empleado empleado;
+    @OneToMany(mappedBy = "biblioteca")
+    private List<Empleado> empleado;
 }
