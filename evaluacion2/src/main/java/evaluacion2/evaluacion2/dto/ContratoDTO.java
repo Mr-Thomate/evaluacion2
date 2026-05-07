@@ -9,5 +9,5 @@ public class ContratoDTO {
     private String fechaInicio;
     private String fechaFin;
     private Integer sueldo;
-    private Integer idEmpleado;
+    private String nombreEmpleado;
 }
