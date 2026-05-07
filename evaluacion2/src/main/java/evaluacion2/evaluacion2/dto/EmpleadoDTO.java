@@ -9,6 +9,6 @@ public class EmpleadoDTO {
     private String snombre;
     private String papellido;
     private String sapellido;
-    private Integer idContrato;
-    private Integer idBiblioteca;
+    private String EstadoContrato;
+    private String nombreBiblioteca;
 }
