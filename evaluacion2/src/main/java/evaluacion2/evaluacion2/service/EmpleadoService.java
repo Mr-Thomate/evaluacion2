@@ -45,7 +45,7 @@ public class EmpleadoService {
         dto.setSapellido(emp.getSapellido());
 
         if (emp.getBiblioteca() != null) {
-            dto.setIdBiblioteca(emp.getBiblioteca().getIdBiblioteca());
+            dto.setIdBiblioteca(emp.getBiblioteca().getnombreBiblioteca());
         }
         if (emp.getContrato() != null) {
             dto.setIdContrato(emp.getContrato().getId());
