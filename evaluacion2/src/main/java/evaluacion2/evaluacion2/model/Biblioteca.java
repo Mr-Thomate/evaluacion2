@@ -26,7 +26,7 @@ public class Biblioteca {
     private String direccion;
 
     @ManyToOne
-    @JoinColumn(name = "id_comuna") // FK que apunta a la tabla Comuna
+    @JoinColumn(name = "id_comuna")
     private Comuna comuna;
 
     @OneToMany
