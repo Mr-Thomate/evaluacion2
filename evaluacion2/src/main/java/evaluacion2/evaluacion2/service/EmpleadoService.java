@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import evaluacion2.evaluacion2.dto.EmpleadoDTO;
 import evaluacion2.evaluacion2.model.Empleado;
 import evaluacion2.evaluacion2.repository.EmpleadoRepository;
-
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,19 +37,20 @@ public class EmpleadoService {
 
     private EmpleadoDTO convertirADTO(Empleado emp) {
         EmpleadoDTO dto = new EmpleadoDTO();
+
         dto.setIdEmpleado(emp.getId());
-        dto.setNombreCompleto(emp.getPnombre() + " " + emp.getPapellido());
+        dto.setPnombre(emp.getPnombre());
+        dto.setSnombre(emp.getSnombre());
+        dto.setPapellido(emp.getPapellido());
+        dto.setSapellido(emp.getSapellido());
+
         if (emp.getBiblioteca() != null) {
-            dto.setNombreBiblioteca(emp.getBiblioteca().getNombreBiblioteca());
-        } else {
-            dto.setNombreBiblioteca("No asignada");
+            dto.setIdBiblioteca(emp.getBiblioteca().getIdBiblioteca());
         }
         if (emp.getContrato() != null) {
-            dto.setTipoContrato(emp.getContrato().getTipoContrato());
-        } else {
-            dto.setTipoContrato("Sin contrato");
+            dto.setIdContrato(emp.getContrato().getId());
         }
-        
+
         return dto;
     }
 }
