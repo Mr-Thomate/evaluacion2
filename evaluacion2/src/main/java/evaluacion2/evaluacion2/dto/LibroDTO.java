@@ -1,5 +1,7 @@
 package evaluacion2.evaluacion2.dto;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -8,7 +10,7 @@ public class LibroDTO {
     private String titulo;
     private String fecha_publicacion;
     private String categoria;
-    private String editorial;
-    private String autor;
-    private Integer idPrestamo;
+    private String nombreEditorial;
+    private String nombreAutor;
+    private List<String> nombreClientesPrestamo; //mostrar el nombre de los clientes que tienen en prestamo el libro
 }
