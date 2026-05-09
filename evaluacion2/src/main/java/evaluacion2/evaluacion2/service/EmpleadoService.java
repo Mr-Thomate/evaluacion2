@@ -10,9 +10,8 @@ import evaluacion2.evaluacion2.dto.EmpleadoDTO;
 import evaluacion2.evaluacion2.model.Empleado;
 import evaluacion2.evaluacion2.repository.EmpleadoRepository;
 import jakarta.transaction.Transactional;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+
 @Service
 @Transactional
 public class EmpleadoService {
@@ -21,7 +20,6 @@ public class EmpleadoService {
     private EmpleadoRepository empleadoRepository;
 
     public List<EmpleadoDTO> obtenerTodos() {
-        log.info("Consultando todos los empleados");
         List<EmpleadoDTO> listaDTO = new ArrayList<>();
         for (Empleado emp : empleadoRepository.findAll()) {
             listaDTO.add(convertirADTO(emp));
@@ -30,7 +28,6 @@ public class EmpleadoService {
     }
 
     public EmpleadoDTO guardar(Empleado nuevoEmpleado) {
-        log.info("Guardando empleado: {}", nuevoEmpleado.getPnombre());
         Empleado guardado = empleadoRepository.save(nuevoEmpleado);
         return convertirADTO(guardado);
     }
