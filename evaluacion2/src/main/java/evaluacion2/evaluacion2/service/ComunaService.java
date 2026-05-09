@@ -46,9 +46,7 @@ public class ComunaService {
             dto.setRegion(comuna.getRegion().getNombreRegion());
         }
         if (comuna.getBiblioteca() != null) {
-            dto.setNombreBibliotecas(comuna.getBiblioteca().stream()
-                .map(bib -> bib.getNombreBiblioteca())
-                .collect(Collectors.toList()));
+            dto.setNombreBibliotecas(comuna.getBiblioteca().stream().map(bib -> bib.getNombreBiblioteca()).collect(Collectors.toList()));
         }
 
         return dto;
