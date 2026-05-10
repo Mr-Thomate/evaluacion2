@@ -26,9 +26,20 @@ public class ComunaService {
         return comunaRepository.findById(id).map(this::convertirADTO).orElseThrow(() -> new RuntimeException("Error: No se encontró la comuna con el ID: " + id));
     }
 
-    public ComunaDTO guardar(Comuna comuna) {
-        Comuna guardada = comunaRepository.save(comuna);
-        return convertirADTO(guardada);
+    public Comuna guardar(Comuna comuna) {
+        return comunaRepository.save(comuna);
+    }
+
+    public Comuna actualizar(Integer id, Comuna comuna) {
+        Comuna com = comunaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Error: La comuna no existe."));
+        if (comuna.getNombreComuna() != null) {
+            com.setNombreComuna(comuna.getNombreComuna());
+        }
+        if (comuna.getRegion() != null) {
+            com.setRegion(comuna.getRegion());
+        }
+        return comunaRepository.save(com);
     }
 
     public void eliminar(Integer id) {

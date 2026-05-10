@@ -19,7 +19,6 @@ public class BibliotecaService {
     @Autowired
     private BibliotecaRepository bibliotecaRepository;
 
-
     public List<BibliotecaDTO> obtenerTodas() {
         List<BibliotecaDTO> listaDTO = new ArrayList<>();
         for (Biblioteca bib : bibliotecaRepository.findAll()) {
@@ -27,14 +26,34 @@ public class BibliotecaService {
         }
         return listaDTO;
     }
+
     public BibliotecaDTO buscarPorId(Integer id) {
         Biblioteca bib = bibliotecaRepository.findById(id).orElse(null);
         return (bib != null) ? convertirADTO(bib) : null;
     }
-    public BibliotecaDTO guardar(Biblioteca biblioteca) {
-        Biblioteca guardada = bibliotecaRepository.save(biblioteca);
-        return convertirADTO(guardada);
+
+    public Biblioteca guardar(Biblioteca biblioteca) {
+        return bibliotecaRepository.save(biblioteca);
     }
+
+    public Biblioteca actualizar(Integer id, Biblioteca biblioteca) {
+        Biblioteca bib = bibliotecaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Error: La biblioteca no existe."));
+        if (biblioteca.getNombreBiblioteca() != null) {
+            bib.setNombreBiblioteca(biblioteca.getNombreBiblioteca());
+        }
+        if (biblioteca.getDireccion() != null) {
+            bib.setDireccion(biblioteca.getDireccion());
+        }
+        if (biblioteca.getComuna() != null) {
+            bib.setComuna(biblioteca.getComuna());
+        }
+        if (biblioteca.getEmpleado() != null) {
+            bib.setEmpleado(biblioteca.getEmpleado());
+        }
+        return bibliotecaRepository.save(bib);
+    }
+
     public boolean eliminar(Integer id) {
         if (bibliotecaRepository.existsById(id)) {
             bibliotecaRepository.deleteById(id);

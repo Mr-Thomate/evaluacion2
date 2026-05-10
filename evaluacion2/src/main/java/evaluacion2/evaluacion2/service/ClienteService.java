@@ -26,9 +26,32 @@ public class ClienteService {
         return dtos;
     }
 
-    public ClienteDTO guardar(Cliente cliente) {
-        Cliente guardado = clienteRepository.save(cliente);
-        return convertirADTO(guardado);
+    public Cliente guardar(Cliente cliente) {
+        return clienteRepository.save(cliente);
+    }
+
+    public Cliente actualizar(Integer id, Cliente cliente) {
+        Cliente cli = clienteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Error: El cliente no existe."));
+        if (cliente.getPnombre() != null) {
+            cli.setPnombre(cliente.getPnombre());
+        }
+        if (cliente.getSnombre() != null) {
+            cli.setSnombre(cliente.getSnombre());
+        }
+        if (cliente.getPapellido() != null) {
+            cli.setPapellido(cliente.getPapellido());
+        }
+        if (cliente.getSapellido() != null) {
+            cli.setSapellido(cliente.getSapellido());
+        }
+        if (cliente.getFechaNacimiento() != null) {
+            cli.setFechaNacimiento(cliente.getFechaNacimiento());
+        }
+        if (cliente.getPrestamo() != null) {
+            cli.setPrestamo(cliente.getPrestamo());
+        }
+        return clienteRepository.save(cli);
     }
 
     public void eliminar(Integer id) {
@@ -38,6 +61,7 @@ public class ClienteService {
     public ClienteDTO buscarPorId(Integer id) {
         return clienteRepository.findById(id).map(this::convertirADTO).orElseThrow(() -> new RuntimeException("Error: No se encontró el cliente con el ID: " + id));
     }
+
     public ClienteDTO buscarPorTituloLibro(String tituloLibro) {
         Cliente cliente = (Cliente) clienteRepository.findByTituloLibro(tituloLibro);
         if (cliente == null) {
@@ -45,6 +69,7 @@ public class ClienteService {
         }
         return convertirADTO(cliente);
     }
+
     public ClienteDTO buscarPorIdPrestamo(Integer idPrestamo) {
         Cliente cliente = (Cliente) clienteRepository.findByIdPrestamo(idPrestamo);
         if (cliente == null) {
@@ -62,7 +87,7 @@ public class ClienteService {
         dto.setSapellido(c.getSapellido());
         dto.setFechaNacimiento(c.getFechaNacimiento());
         dto.setSexo(c.getSexo());
-        
+
         dto.setTituloLibroPrestamo(new ArrayList<>());
         return dto;
     }

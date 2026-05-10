@@ -41,7 +41,7 @@ public class Contrato {
     @NotNull(message = "El contrato debe incluir un sueldo")
     @Size(max = 8, message = "El sueldo no puede tener mas de 8 digitos")
     @Column(nullable = false, length = 8)
-    private int sueldo;
+    private Integer sueldo;
 
     @OneToOne(mappedBy = "contrato")
     private Empleado empleado;

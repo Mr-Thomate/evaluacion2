@@ -11,7 +11,6 @@ import evaluacion2.evaluacion2.model.Empleado;
 import evaluacion2.evaluacion2.repository.EmpleadoRepository;
 import jakarta.transaction.Transactional;
 
-
 @Service
 @Transactional
 public class EmpleadoService {
@@ -27,9 +26,32 @@ public class EmpleadoService {
         return listaDTO;
     }
 
-    public EmpleadoDTO guardar(Empleado nuevoEmpleado) {
-        Empleado guardado = empleadoRepository.save(nuevoEmpleado);
-        return convertirADTO(guardado);
+    public Empleado guardar(Empleado nuevoEmpleado) {
+        return empleadoRepository.save(nuevoEmpleado);
+    }
+
+    public Empleado actualizar(Integer id, Empleado empleado) {
+        Empleado emp = empleadoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Error: El empleado no existe."));
+        if (empleado.getPnombre() != null) {
+            emp.setPnombre(empleado.getPnombre());
+        }
+        if (empleado.getSnombre() != null) {
+            emp.setSnombre(empleado.getSnombre());
+        }
+        if (empleado.getPapellido() != null) {
+            emp.setPapellido(empleado.getPapellido());
+        }
+        if (empleado.getSapellido() != null) {
+            emp.setSapellido(empleado.getSapellido());
+        }
+        if (empleado.getBiblioteca() != null) {
+            emp.setBiblioteca(empleado.getBiblioteca());
+        }
+        if (empleado.getContrato() != null) {
+            emp.setContrato(empleado.getContrato());
+        }
+        return empleadoRepository.save(emp);
     }
 
     private EmpleadoDTO convertirADTO(Empleado emp) {
@@ -46,7 +68,7 @@ public class EmpleadoService {
         }
         if (emp.getContrato() != null) {
             dto.setEstadoContrato("Con contrato");
-        }else {
+        } else {
             dto.setEstadoContrato("Sin contrato");
         }
 
