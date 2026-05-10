@@ -109,8 +109,8 @@ public class LibroController {
     @PutMapping("/{id}")
     public ResponseEntity<Libro> actualizarLibro(@PathVariable Integer id, @RequestBody Libro libro) {
         try {
-            Libro editado = libroService.actualizar(id, libro);
-            return new ResponseEntity<>(editado, HttpStatus.OK);
+            Libro actualizado = libroService.actualizar(id, libro);
+            return new ResponseEntity<>(actualizado, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
