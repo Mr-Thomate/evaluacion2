@@ -16,8 +16,10 @@ import jakarta.transaction.Transactional;
 @Service
 @Transactional
 public class AutorService {
+
     @Autowired
     private AutorRepository autorRepository;
+
     public List<AutorDTO> obtenerTodos() {
         return autorRepository.findAll().stream().map(this::convertirADTO).collect(Collectors.toList());
     }
@@ -30,9 +32,19 @@ public class AutorService {
         return autores.stream().map(this::convertirADTO).collect(Collectors.toList());
     }
 
-    public AutorDTO guardar(Autor autor) {
-        Autor guardado = autorRepository.save(autor);
-        return convertirADTO(guardado);
+    public Autor guardar(Autor autor) {
+        return autorRepository.save(autor);
+    }
+
+    public Autor actualizar(Integer id, Autor autor) {
+        Autor aut = autorRepository.findById(id).orElseThrow(() -> new RuntimeException("Error: El autor no existe."));
+        if (autor.getNombre() != null) {
+            aut.setNombre(autor.getNombre());
+        }
+        if (autor.getLibroAutor() != null) {
+            aut.setLibroAutor(autor.getLibroAutor());
+        }
+        return autorRepository.save(aut);
     }
 
     public void eliminar(Integer id) {
@@ -41,17 +53,17 @@ public class AutorService {
         }
         autorRepository.deleteById(id);
     }
-    
+
     private AutorDTO convertirADTO(Autor Atr) {
         AutorDTO dto = new AutorDTO();
         dto.setId(Atr.getId());
         dto.setNombre(Atr.getNombre());
         List<String> librosEscritos = new ArrayList<>();
-        if(Atr.getLibroAutor() != null){
+        if (Atr.getLibroAutor() != null) {
             for (LibroAutor libroAutor : Atr.getLibroAutor()) {
                 librosEscritos.add(libroAutor.getLibro().getTitulo());
             }
-        }else {
+        } else {
             librosEscritos.add("El Autor no tiene libros publicados");
         }
         dto.setTituloLibros(librosEscritos);

@@ -17,7 +17,7 @@ public class EditorialService {
 
     @Autowired
     private EditorialRepository editorialRepository;
-    
+
     public List<EditorialDTO> obtenerTodas() {
         return editorialRepository.findAll().stream().map(this::convertirADTO).collect(Collectors.toList());
     }
@@ -28,17 +28,27 @@ public class EditorialService {
 
     public List<EditorialDTO> buscarPorTituloLibro(String tituloLibro) {
         List<Editorial> editoriales = editorialRepository.findByLibroTitulo(tituloLibro);
-        
+
         if (editoriales.isEmpty()) {
             throw new RuntimeException("Error: No se encontraron editoriales para el libro: " + tituloLibro);
         }
-        
+
         return editoriales.stream().map(this::convertirADTO).collect(Collectors.toList());
     }
 
-    public EditorialDTO guardar(Editorial editorial) {
-        Editorial guardada = editorialRepository.save(editorial);
-        return convertirADTO(guardada);
+    public Editorial guardar(Editorial editorial) {
+        return editorialRepository.save(editorial);
+    }
+
+    public Editorial actualizar(Integer id, Editorial editorial) {
+        Editorial edi = editorialRepository.findById(id).orElseThrow(() -> new RuntimeException("Error: La editorial no existe."));
+        if (editorial.getNombre() != null) {
+            edi.setNombre(editorial.getNombre());
+        }
+        if (editorial.getLibroEditorial() != null) {
+            edi.setLibroEditorial(editorial.getLibroEditorial());
+        }
+        return editorialRepository.save(edi);
     }
 
     public void eliminar(Integer id) {
