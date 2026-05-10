@@ -14,6 +14,7 @@ import jakarta.transaction.Transactional;
 @Service
 @Transactional
 public class CategoriaService {
+
     private CategoriaRepository categoriaRepository;
 
     public List<CategoriaDTO> obtenerTodas() {
@@ -28,9 +29,20 @@ public class CategoriaService {
         return categoriaRepository.findById(id).map(this::convertirADTO).orElseThrow(() -> new RuntimeException("Error: No se encontró la categoria con el ID: " + id));
     }
 
-    public CategoriaDTO guardar(Categoria categoria) {
-        Categoria guardada = categoriaRepository.save(categoria);
-        return convertirADTO(guardada);
+    public Categoria guardar(Categoria categoria) {
+        return categoriaRepository.save(categoria);
+    }
+
+    public Categoria actualizar(Integer id, Categoria categoria) {
+        Categoria cat = categoriaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Error: La categoría no existe."));
+        if (categoria.getNombre() != null) {
+            cat.setNombre(categoria.getNombre());
+        }
+        if (categoria.getLibroCategoria() != null) {
+            cat.setLibroCategoria(categoria.getLibroCategoria());
+        }
+        return categoriaRepository.save(cat);
     }
 
     public void eliminar(Integer id) {
@@ -40,18 +52,18 @@ public class CategoriaService {
         categoriaRepository.deleteById(id);
     }
 
-    private CategoriaDTO convertirADTO(Categoria ctr){
+    private CategoriaDTO convertirADTO(Categoria ctr) {
         CategoriaDTO dto = new CategoriaDTO();
 
         dto.setId(ctr.getId());
         dto.setNombre(ctr.getNombre());
         List<String> librosEnCategoria = new ArrayList<>();
 
-        if(ctr.getLibroCategoria() != null){
+        if (ctr.getLibroCategoria() != null) {
             for (LibroCategoria libroCategoria : ctr.getLibroCategoria()) {
                 librosEnCategoria.add(libroCategoria.getLibro().getTitulo());
             }
-        }else {
+        } else {
             librosEnCategoria.add("La categoria no contiene libros");
         }
         dto.setTituloLibros(librosEnCategoria);
