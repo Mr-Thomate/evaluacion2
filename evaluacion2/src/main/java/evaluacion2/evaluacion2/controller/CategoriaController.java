@@ -68,6 +68,7 @@ public class CategoriaController {
     }
 
     // actualizar Categoria
+    @PutMapping("/{id}")
     public ResponseEntity<Categoria> actualizarCategoria(@PathVariable Integer id, @RequestBody Categoria categoria) {
         try {
             Categoria editada = categoriaService.actualizar(id, categoria);
