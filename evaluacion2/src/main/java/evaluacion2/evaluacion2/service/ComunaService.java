@@ -42,11 +42,15 @@ public class ComunaService {
         return comunaRepository.save(com);
     }
 
-    public void eliminar(Integer id) {
-        if (!comunaRepository.existsById(id)) {
-            throw new RuntimeException("Error: No se puede eliminar, la comuna ID " + id + " no existe.");
+    public String eliminar(Integer id) {
+        try {
+            Comuna comuna = comunaRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Error: No se encuentra la comuna"));
+            comunaRepository.delete(comuna);
+            return "La comuna " + comuna.getNombreComuna() + " ha sido eliminada con exito.";
+        } catch (RuntimeException e) {
+            return e.getMessage();
         }
-        comunaRepository.deleteById(id);
     }
 
     private ComunaDTO convertirADTO(Comuna comuna) {

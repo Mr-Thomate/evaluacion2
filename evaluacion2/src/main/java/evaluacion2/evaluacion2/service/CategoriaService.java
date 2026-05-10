@@ -2,6 +2,7 @@ package evaluacion2.evaluacion2.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,10 @@ public class CategoriaService {
         return dtos;
     }
 
+    public List<CategoriaDTO> buscarLibrosEnCategoria(String nombreCategoria) {
+        return categoriaRepository.findByLibroTitulo(nombreCategoria).stream().map(this::convertirADTO).collect(Collectors.toList());
+    }
+
     public CategoriaDTO buscarPorId(Integer id) {
         return categoriaRepository.findById(id).map(this::convertirADTO).orElseThrow(() -> new RuntimeException("Error: No se encontró la categoria con el ID: " + id));
     }
@@ -45,13 +50,17 @@ public class CategoriaService {
         return categoriaRepository.save(cat);
     }
 
-    public void eliminar(Integer id) {
-        if (!categoriaRepository.existsById(id)) {
-            throw new RuntimeException("Error: No se puede eliminar, la categoria ID " + id + " no existe.");
+    public String eliminar(Integer id) {
+        try {
+            Categoria categoria = categoriaRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Error: No se encuentra la categoria"));
+            categoriaRepository.delete(categoria);
+            return "El libro " + categoria.getNombre() + " ha sido eliminada con exito.";
+        } catch (RuntimeException e) {
+            return e.getMessage();
         }
-        categoriaRepository.deleteById(id);
     }
-
+    
     private CategoriaDTO convertirADTO(Categoria ctr) {
         CategoriaDTO dto = new CategoriaDTO();
 
