@@ -15,40 +15,40 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import evaluacion2.evaluacion2.dto.AutorDTO;
-import evaluacion2.evaluacion2.model.Autor;
-import evaluacion2.evaluacion2.service.AutorService;
+import evaluacion2.evaluacion2.dto.PrestamoDTO;
+import evaluacion2.evaluacion2.model.Prestamo;
+import evaluacion2.evaluacion2.service.PrestamoService;
 
 @RestController
-@RequestMapping("/api/v1/autores")
-public class AutorController {
+@RequestMapping("/api/v1/prestamos")
+public class PrestamoController {
     @Autowired
-    private AutorService autorService;
+    private PrestamoService prestamoService;
 
     // Metodos
     @GetMapping
-    public ResponseEntity<List<AutorDTO>> obtenerTodosAutores() {
-        List<AutorDTO> resultado = autorService.obtenerTodos();
+    public ResponseEntity<List<PrestamoDTO>> obtenerTodosPrestamos() {
+        List<PrestamoDTO> resultado = prestamoService.obtenerTodos();
         if (resultado.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(resultado, HttpStatus.OK);
     }
 
-    @GetMapping("/libro/{titulo}")
-    public ResponseEntity<List<AutorDTO>> obtenerAutorPorTituloLibro(@PathVariable String titulo) {
+    @GetMapping("/{id}")
+    public ResponseEntity<PrestamoDTO> buscarPorId(@PathVariable Integer id) {
         try {
-            List<AutorDTO> autores = autorService.buscarPorTituloLibro(titulo);
-            return new ResponseEntity<>(autores, HttpStatus.OK);
+            PrestamoDTO resultado = prestamoService.buscarPorId(id);
+            return new ResponseEntity<>(resultado, HttpStatus.OK);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PostMapping
-    public ResponseEntity<Autor> guardarAutor(@RequestBody Autor autor) {
+    public ResponseEntity<Prestamo> agregarPrestamo(@RequestBody Prestamo prestamo) {
         try {
-            Autor guardado = autorService.guardar(autor);
+            Prestamo guardado = prestamoService.guardar(prestamo);
             return new ResponseEntity<>(guardado, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -56,9 +56,9 @@ public class AutorController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Autor> editarAutor(@PathVariable Integer id, @RequestBody Autor autor) {
+    public ResponseEntity<Prestamo> editarPrestamo(@PathVariable Integer id, @RequestBody Prestamo prestamo) {
         try {
-            Autor editado = autorService.guardar(autor);
+            Prestamo editado = prestamoService.actualizar(id, prestamo);
             return new ResponseEntity<>(editado, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -66,9 +66,9 @@ public class AutorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Autor> actualizarAutor(@PathVariable Integer id, @RequestBody Autor autor) {
+    public ResponseEntity<Prestamo> actualizarPrestamo(@PathVariable Integer id, @RequestBody Prestamo prestamo) {
         try {
-            Autor actualizado = autorService.actualizar(id, autor);
+            Prestamo actualizado = prestamoService.actualizar(id, prestamo);
             return new ResponseEntity<>(actualizado, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -76,8 +76,8 @@ public class AutorController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarAutor(@PathVariable Integer id) {
-        String resultado = autorService.eliminar(id);
+    public ResponseEntity<String> eliminarPrestamo(@PathVariable Integer id) {
+        String resultado = prestamoService.eliminar(id);
 
         if (resultado.contains("exito")) {
             return new ResponseEntity<>(resultado, HttpStatus.OK);
