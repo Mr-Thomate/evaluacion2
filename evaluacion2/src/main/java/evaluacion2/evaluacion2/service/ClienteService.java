@@ -39,16 +39,14 @@ public class ClienteService {
         return clienteRepository.findById(id).map(this::convertirADTO).orElseThrow(() -> new RuntimeException("Error: No se encontró el cliente con el ID: " + id));
     }
     public ClienteDTO buscarPorTituloLibro(String tituloLibro) {
-        Cliente cliente = clienteRepository.findByTituloLibro(tituloLibro)
-                .orElseThrow(() -> new RuntimeException("Error: No se encontró un cliente asociado a este titulo."));
+        Cliente cliente = (Cliente) clienteRepository.findByTituloLibro(tituloLibro);
         if (cliente == null) {
             throw new RuntimeException("Error: No se encontró un cliente con préstamo del libro: " + tituloLibro);
         }
         return convertirADTO(cliente);
     }
     public ClienteDTO buscarPorIdPrestamo(Integer idPrestamo) {
-        Cliente cliente = clienteRepository.findByIdPrestamo(idPrestamo)
-                .orElseThrow(() -> new RuntimeException("Error: No se encontró un cliente asociado a este prestamo."));
+        Cliente cliente = (Cliente) clienteRepository.findByIdPrestamo(idPrestamo);
         if (cliente == null) {
             throw new RuntimeException("Error: No existe un cliente asociado al préstamo ID: " + idPrestamo);
         }
