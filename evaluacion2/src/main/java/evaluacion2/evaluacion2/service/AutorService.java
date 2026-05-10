@@ -2,6 +2,7 @@ package evaluacion2.evaluacion2.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,13 +18,34 @@ import jakarta.transaction.Transactional;
 public class AutorService {
     @Autowired
     private AutorRepository autorRepository;
+    public List<AutorDTO> obtenerTodos() {
+        return autorRepository.findAll().stream().map(this::convertirADTO).collect(Collectors.toList());
+    }
 
+    public List<AutorDTO> buscarPorTituloLibro(String tituloLibro) {
+        List<Autor> autores = autorRepository.findByLibroTitulo(tituloLibro);
+        if (autores.isEmpty()) {
+            throw new RuntimeException("Error: No se encontraron autores para el libro: " + tituloLibro);
+        }
+        return autores.stream().map(this::convertirADTO).collect(Collectors.toList());
+    }
+
+    public AutorDTO guardar(Autor autor) {
+        Autor guardado = autorRepository.save(autor);
+        return convertirADTO(guardado);
+    }
+
+    public void eliminar(Integer id) {
+        if (!autorRepository.existsById(id)) {
+            throw new RuntimeException("Error: El autor con ID " + id + " no existe.");
+        }
+        autorRepository.deleteById(id);
+    }
+    
     private AutorDTO convertirADTO(Autor Atr) {
         AutorDTO dto = new AutorDTO();
-
         dto.setId(Atr.getId());
         dto.setNombre(Atr.getNombre());
-
         List<String> librosEscritos = new ArrayList<>();
         if(Atr.getLibroAutor() != null){
             for (LibroAutor libroAutor : Atr.getLibroAutor()) {
@@ -33,7 +55,6 @@ public class AutorService {
             librosEscritos.add("El Autor no tiene libros publicados");
         }
         dto.setTituloLibros(librosEscritos);
-
         return dto;
     }
 }
