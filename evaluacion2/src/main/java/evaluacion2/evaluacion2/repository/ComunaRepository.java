@@ -19,7 +19,7 @@ public interface ComunaRepository extends JpaRepository<Comuna, Integer>{
     @Query("SELECT c FROM Comuna c JOIN c.region r WHERE r.id = :idRegion")
     List<Comuna> findByIdRegion(@Param("idRegion") Integer idRegion);
 
-    // Busqueda de comuna mediante Bibliotecas asociadas
-    @Query("SELECT c FROM Comuna c JOIN c.biblioteca b WHERE b.id = :idBiblioteca")
-    List<Comuna> findByIdBiblioteca(@Param("idBiblioteca") Integer idBiblioteca);
+    // Busqueda de bibliotecas mediante comunas asociadas
+    @Query("SELECT c FROM Comuna c JOIN c.biblioteca b WHERE b.nombre = :nombreBiblioteca")
+    List<Comuna> findByNombreBiblioteca(@Param("nombreBiblioteca") String nombreBiblioteca);
 }
