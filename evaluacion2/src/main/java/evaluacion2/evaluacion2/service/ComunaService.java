@@ -26,6 +26,10 @@ public class ComunaService {
         return comunaRepository.findById(id).map(this::convertirADTO).orElseThrow(() -> new RuntimeException("Error: No se encontró la comuna con el ID: " + id));
     }
 
+    public List<ComunaDTO> buscarBibliotecasEnComuna(String nombreBiblioteca){
+        return comunaRepository.findByNombreBiblioteca(nombreBiblioteca).stream().map(this::convertirADTO).collect(Collectors.toList());
+    }
+    
     public Comuna guardar(Comuna comuna) {
         return comunaRepository.save(comuna);
     }
