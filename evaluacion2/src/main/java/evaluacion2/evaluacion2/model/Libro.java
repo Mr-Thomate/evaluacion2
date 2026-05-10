@@ -32,7 +32,7 @@ public class Libro {
 
     @NotBlank(message = "El libro debe tener una fecha de publicacion")
     @Size(min = 10, max = 10, message = "La fecha debe estar en formato 'dd-mm-yyyy'")
-    private String fecha_publicacion;
+    private String fechaPublicacion;
 
 
     @OneToMany(mappedBy = "libro")
