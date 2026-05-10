@@ -21,8 +21,8 @@ import evaluacion2.evaluacion2.service.CategoriaService;
 @RequestMapping("api/v1/Categorias")
 public class CategoriaController {
 
+    @Autowired
     private CategoriaService categoriaService;
-
 
     // Retornar lista Categorias
     @GetMapping
