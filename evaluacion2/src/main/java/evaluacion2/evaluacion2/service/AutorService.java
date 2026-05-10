@@ -47,11 +47,15 @@ public class AutorService {
         return autorRepository.save(aut);
     }
 
-    public void eliminar(Integer id) {
-        if (!autorRepository.existsById(id)) {
-            throw new RuntimeException("Error: El autor con ID " + id + " no existe.");
+    public String eliminar(Integer id) {
+        try {
+            Autor autor = autorRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Error: El autor con ID " + id + " no existe."));
+            autorRepository.delete(autor);
+            return "El autor " + autor.getNombre() + " ha sido eliminado con exito.";
+        } catch (RuntimeException e) {
+            return e.getMessage();
         }
-        autorRepository.deleteById(id);
     }
 
     private AutorDTO convertirADTO(Autor Atr) {

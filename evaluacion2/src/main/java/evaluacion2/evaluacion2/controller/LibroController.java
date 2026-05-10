@@ -89,8 +89,8 @@ public class LibroController {
         try {
             Libro guardado = libroService.guardar(libroNuevo);
             return new ResponseEntity<>(guardado, HttpStatus.CREATED);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -105,7 +105,7 @@ public class LibroController {
         }
     }
 
-    // Editar libro
+    // Actualizar libro
     @PutMapping("/{id}")
     public ResponseEntity<Libro> actualizarLibro(@PathVariable Integer id, @RequestBody Libro libro) {
         try {

@@ -57,13 +57,6 @@ public class LibroService {
         }
     }
 
-    //public void eliminar(Integer id) {
-    //    if (!libroRepository.existsById(id)) {
-    //        throw new RuntimeException("Error, No se puede eliminar, el libro ID " + id + " no existe.");
-    //    }
-    //    libroRepository.deleteById(id);
-    //}
-
     public Libro actualizar(Integer id, Libro libro) {
         Libro lib = libroRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Error: El libro no existe."));
