@@ -5,12 +5,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import evaluacion2.evaluacion2.dto.LibroDTO;
+import evaluacion2.evaluacion2.model.Libro;
 import evaluacion2.evaluacion2.service.LibroService;
 
 @RestController
@@ -35,7 +41,7 @@ public class LibroController {
         try {
             LibroDTO libro = libroService.buscarPorId(id);
             return new ResponseEntity<>(libro, HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -77,8 +83,48 @@ public class LibroController {
         return new ResponseEntity<>(listaLibros, HttpStatus.OK);
     }
 
+    // Guardar nuevo libro
+    @PostMapping
+    public ResponseEntity<Libro> guardarLibro(@RequestBody Libro libroNuevo) {
+        try {
+            Libro guardado = libroService.guardar(libroNuevo);
+            return new ResponseEntity<>(guardado, HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
+    // Editar libro
+    @PatchMapping("/{id}")
+    public ResponseEntity<Libro> editarLibro(@PathVariable Integer id, @RequestBody Libro libro) {
+        try {
+            Libro editado = libroService.guardar(libro);
+            return new ResponseEntity<>(editado, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
-    
+    // Editar libro
+    @PutMapping("/{id}")
+    public ResponseEntity<Libro> actualizarLibro(@PathVariable Integer id, @RequestBody Libro libro) {
+        try {
+            Libro editado = libroService.actualizar(id, libro);
+            return new ResponseEntity<>(editado, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
+    // Eliminar libro
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarLibro(@PathVariable Integer id) {
+        String resultado = libroService.eliminar(id);
+
+        if (resultado.contains("exito")) {
+            return new ResponseEntity<>(resultado, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(resultado, HttpStatus.NOT_FOUND);
+        }
+    }
 }

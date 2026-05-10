@@ -8,7 +8,7 @@ import lombok.Data;
 public class LibroDTO {
     private Integer isbn;
     private String titulo;
-    private String fecha_publicacion;
+    private String fechaPublicacion;
     private String categoria;
     private String nombreEditorial;
     private String nombreAutor;

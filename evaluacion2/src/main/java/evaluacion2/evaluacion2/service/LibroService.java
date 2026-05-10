@@ -42,22 +42,57 @@ public class LibroService {
         return libroRepository.findByIdPrestamo(idPrestamo).stream().map(this::convertirADTO).collect(Collectors.toList());
     }
 
-    public LibroDTO guardar(Libro libro) {
-        return convertirADTO(libroRepository.save(libro));
+    public Libro guardar(Libro libro) {
+        return libroRepository.save(libro);
     }
 
-    public void eliminar(Integer id) {
-        if (!libroRepository.existsById(id)) {
-            throw new RuntimeException("Error, No se puede eliminar, el libro ID " + id + " no existe.");
+    public String eliminar(Integer id) {
+        try {
+            Libro libro = libroRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Error: No se puede eliminar el libro, pues no existe."));
+            libroRepository.delete(libro);
+            return "El libro " + libro.getTitulo() + " ha sido eliminado con exito.";
+        } catch (RuntimeException e) {
+            return e.getMessage();
         }
-        libroRepository.deleteById(id);
+    }
+
+    //public void eliminar(Integer id) {
+    //    if (!libroRepository.existsById(id)) {
+    //        throw new RuntimeException("Error, No se puede eliminar, el libro ID " + id + " no existe.");
+    //    }
+    //    libroRepository.deleteById(id);
+    //}
+
+    public Libro actualizar(Integer id, Libro libro) {
+        Libro lib = libroRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Error: El libro no existe."));
+        if (libro.getTitulo() != null) {
+            lib.setTitulo(libro.getTitulo());
+        }
+        if (libro.getFechaPublicacion() != null) {
+            lib.setFechaPublicacion(libro.getFechaPublicacion());
+        }
+        if (libro.getLibroCategoria() != null) {
+            lib.setLibroCategoria(libro.getLibroCategoria());
+        }
+        if (libro.getLibroEditorial() != null) {
+            lib.setLibroEditorial(libro.getLibroEditorial());
+        }
+        if (libro.getLibroAutor() != null) {
+            lib.setLibroAutor(libro.getLibroAutor());
+        }
+        if (libro.getPrestamo() != null) {
+            lib.setPrestamo(libro.getPrestamo());
+        }
+        return libroRepository.save(lib);
     }
 
     private LibroDTO convertirADTO(Libro libro) {
         LibroDTO dto = new LibroDTO();
         dto.setIsbn(libro.getIsbn());
         dto.setTitulo(libro.getTitulo());
-        dto.setFecha_publicacion(libro.getFecha_publicacion());
+        dto.setFechaPublicacion(libro.getFechaPublicacion());
         if (libro.getLibroCategoria() != null && !libro.getLibroCategoria().isEmpty()) {
             dto.setCategoria(libro.getLibroCategoria().get(0).getCategoria().getNombre());
         }
