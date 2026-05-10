@@ -26,4 +26,8 @@ public interface LibroRepository extends JpaRepository<Libro, Integer>{
     // Busqueda de libro por Prestamo asociado
     @Query("SELECT l FROM Libro l JOIN l.prestamo p WHERE p.id = :idPrestamo")
     List<Libro> findByIdPrestamo(@Param("idPrestamo") Integer idPrestamo);
+
+    // Busqueda de libro por Biblioteca asociado
+    @Query("SELECT l FROM Libro l JOIN l.prestamo p JOIN p.biblioteca b WHERE b.id = :idBiblioteca")
+    List<Libro> findByIdBiblioteca(@Param("idBiblioteca") Integer idBiblioteca);
 }
