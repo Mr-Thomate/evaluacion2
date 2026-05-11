@@ -68,10 +68,10 @@ public class ContratoService {
 
     public String eliminar(Integer id) {
         try {
-            Contrato con = contratoRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Error: No se puede eliminar el contrato, pues no existe."));
-            contratoRepository.delete(con);
-            return "El contrato con ID " + id + " ha sido eliminado con exito.";
+            Contrato contrato = contratoRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Error: No se encuentra la comuna"));
+            contratoRepository.delete(contrato);
+            return "El contrtato " + contrato.getId() + " ha sido eliminado con exito.";
         } catch (RuntimeException e) {
             return e.getMessage();
         }
