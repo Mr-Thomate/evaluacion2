@@ -2,10 +2,8 @@ package evaluacion2.evaluacion2.service;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import evaluacion2.evaluacion2.dto.ClienteDTO;
 import evaluacion2.evaluacion2.model.Cliente;
 import evaluacion2.evaluacion2.repository.ClienteRepository;
