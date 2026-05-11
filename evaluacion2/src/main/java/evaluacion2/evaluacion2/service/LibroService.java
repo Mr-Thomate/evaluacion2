@@ -95,7 +95,7 @@ public class LibroService {
         if (libro.getLibroAutor() != null && !libro.getLibroAutor().isEmpty()) {
             dto.setNombreAutor(libro.getLibroAutor().get(0).getAutor().getNombre());
         }
-        if (libro.getPrestamo() != null) {
+        if (libro.getPrestamo() != null && !libro.getPrestamo().isEmpty()) {
             dto.setNombreClientesPrestamo(libro.getPrestamo().stream()
                 .map(p -> p.getCliente().getPnombre() + " " + p.getCliente().getPapellido())
                 .collect(Collectors.toList()));
