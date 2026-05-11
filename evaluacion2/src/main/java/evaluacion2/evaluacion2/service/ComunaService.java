@@ -2,10 +2,8 @@ package evaluacion2.evaluacion2.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import evaluacion2.evaluacion2.dto.ComunaDTO;
 import evaluacion2.evaluacion2.model.Comuna;
 import evaluacion2.evaluacion2.repository.ComunaRepository;
