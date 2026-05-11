@@ -18,7 +18,7 @@ import evaluacion2.evaluacion2.model.Categoria;
 import evaluacion2.evaluacion2.service.CategoriaService;
 
 @RestController
-@RequestMapping("api/v1/Categorias")
+@RequestMapping("api/v1/categorias")
 public class CategoriaController {
 
     @Autowired

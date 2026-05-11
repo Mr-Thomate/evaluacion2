@@ -3,6 +3,8 @@ package evaluacion2.evaluacion2.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import evaluacion2.evaluacion2.dto.CategoriaDTO;
 import evaluacion2.evaluacion2.model.Categoria;
@@ -13,7 +15,7 @@ import jakarta.transaction.Transactional;
 @Service
 @Transactional
 public class CategoriaService {
-
+    @Autowired
     private CategoriaRepository categoriaRepository;
 
     public List<CategoriaDTO> obtenerTodas() {
