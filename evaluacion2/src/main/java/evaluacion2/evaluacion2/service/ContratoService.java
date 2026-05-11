@@ -66,11 +66,15 @@ public class ContratoService {
         return contratoRepository.save(con);
     }
 
-    public void eliminar(Integer id) {
-        if (!contratoRepository.existsById(id)) {
-            throw new RuntimeException("Error: No se puede eliminar, el contrato ID " + id + " no existe.");
+    public String eliminar(Integer id) {
+        try {
+            Contrato con = contratoRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Error: No se puede eliminar el contrato, pues no existe."));
+            contratoRepository.delete(con);
+            return "El contrato con ID " + id + " ha sido eliminado con exito.";
+        } catch (RuntimeException e) {
+            return e.getMessage();
         }
-        contratoRepository.deleteById(id);
     }
 
     private ContratoDTO convertirADTO(Contrato contrato) {
