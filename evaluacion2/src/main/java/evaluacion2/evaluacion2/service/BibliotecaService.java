@@ -54,12 +54,37 @@ public class BibliotecaService {
         return bibliotecaRepository.save(bib);
     }
 
-    public boolean eliminar(Integer id) {
-        if (bibliotecaRepository.existsById(id)) {
-            bibliotecaRepository.deleteById(id);
-            return true;
+    public String eliminar(Integer id) {
+        try {
+            Biblioteca bib = bibliotecaRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Error: No se puede eliminar la biblioteca, pues no existe."));
+            bibliotecaRepository.delete(bib);
+            return "La biblioteca " + bib.getNombreBiblioteca() + " ha sido eliminada con exito.";
+        } catch (RuntimeException e) {
+            return e.getMessage();
         }
-        return false;
+    }
+
+    public BibliotecaDTO buscarPorIdPrestamo(Integer idPrestamo) {
+        return bibliotecaRepository.findByIdPrestamo(idPrestamo)
+                .map(this::convertirADTO)
+                .orElseThrow(() -> new RuntimeException("No se encontró biblioteca asociada al préstamo ID: " + idPrestamo));
+    }
+
+    public List<BibliotecaDTO> buscarPorIdComuna(Integer idComuna) {
+        List<Biblioteca> bibliotecas = bibliotecaRepository.findByIdComuna(idComuna);
+        if (bibliotecas.isEmpty()) {
+            throw new RuntimeException("No se encontraron bibliotecas en la comuna ID: " + idComuna);
+        }
+        return bibliotecas.stream()
+                .map(this::convertirADTO)
+                .collect(Collectors.toList());
+    }
+
+    public BibliotecaDTO buscarPorIdEmpleado(Integer idEmpleado) {
+        return bibliotecaRepository.findByIdEmpleado(idEmpleado)
+                .map(this::convertirADTO)
+                .orElseThrow(() -> new RuntimeException("No se encontró biblioteca para el empleado ID: " + idEmpleado));
     }
 
     private BibliotecaDTO convertirADTO(Biblioteca bib) {
