@@ -68,6 +68,7 @@ public class EmpleadoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarEmpleado(@PathVariable Integer id) {
         try {
+            empleadoService.eliminar(id);
             return new ResponseEntity<>("Empleado eliminado con éxito", HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>("Error al eliminar", HttpStatus.NOT_FOUND);
