@@ -3,9 +3,7 @@ package evaluacion2.evaluacion2.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Service;
-
 import evaluacion2.evaluacion2.dto.CategoriaDTO;
 import evaluacion2.evaluacion2.model.Categoria;
 import evaluacion2.evaluacion2.model.LibroCategoria;
