@@ -79,7 +79,7 @@ public class ComunaController {
         }
     }
 
-    // Eliminar categoria
+    // Eliminar comuna
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarCategoria(@PathVariable Integer id) {
         String resultado = comunaService.eliminar(id);
