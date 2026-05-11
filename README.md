@@ -13,3 +13,5 @@ El proyecto está organizado utilizando la estructura CSR vista en clase (contro
 se utilizaron buenas prácticas básicas (vistas en clase) de desarrollo backend y conexión a base de datos mediante Spring Data JPA.
 
 --PASOS PARA EJECUTAR EL PROGRAMA--
+
+En Laragon, en la base de datos el script que usamos para crear la base de datos es: CREATE DATABASE biblioteca_ev2;
