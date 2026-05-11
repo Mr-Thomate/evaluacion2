@@ -46,7 +46,7 @@ public class ContratoController {
         }
     }
 
-    // Guardar nueva comuna
+    // Guardar nuevo contrato
     @PostMapping
     public ResponseEntity<Contrato> guardarcontrato(@RequestBody Contrato nuevocontrato) {
         try {
@@ -57,7 +57,7 @@ public class ContratoController {
         }
     }
 
-    // Editar Comuna
+    // Editar Contrato
     @PatchMapping("/{id}")
     public ResponseEntity<Contrato> editarContrato(@PathVariable Integer id, @RequestBody Contrato contrato) {
         try {
@@ -68,7 +68,7 @@ public class ContratoController {
         }
     }
 
-    // actualizar Comuna
+    // actualizar Contrato
     @PutMapping("/{id}")
     public ResponseEntity<Contrato> actualizarContrato(@PathVariable Integer id, @RequestBody Contrato contrato) {
         try {
