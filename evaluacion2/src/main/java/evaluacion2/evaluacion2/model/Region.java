@@ -1,7 +1,6 @@
 package evaluacion2.evaluacion2.model;
 
 import java.util.List;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

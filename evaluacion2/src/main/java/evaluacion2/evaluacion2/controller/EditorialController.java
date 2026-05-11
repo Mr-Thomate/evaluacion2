@@ -1,19 +1,19 @@
 package evaluacion2.evaluacion2.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import evaluacion2.evaluacion2.dto.EditorialDTO;
 import evaluacion2.evaluacion2.model.Editorial;
 import evaluacion2.evaluacion2.service.EditorialService;
@@ -61,6 +61,26 @@ public class EditorialController {
             return new ResponseEntity<>(guardada, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Editorial> editarEditorial(@PathVariable Integer id, @RequestBody Editorial editorial) {
+        try {
+            Editorial editada = editorialService.guardar(editorial);
+            return new ResponseEntity<>(editada, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Editorial> actualizarEditorial(@PathVariable Integer id, @RequestBody Editorial editorial) {
+        try {
+            Editorial editada = editorialService.actualizar(id, editorial);
+            return new ResponseEntity<>(editada, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

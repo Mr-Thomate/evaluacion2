@@ -1,6 +1,7 @@
 package evaluacion2.evaluacion2.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,75 +14,75 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import evaluacion2.evaluacion2.dto.CategoriaDTO;
-import evaluacion2.evaluacion2.model.Categoria;
-import evaluacion2.evaluacion2.service.CategoriaService;
+import evaluacion2.evaluacion2.dto.ComunaDTO;
+import evaluacion2.evaluacion2.model.Comuna;
+import evaluacion2.evaluacion2.service.ComunaService;
 
 @RestController
-@RequestMapping("api/v1/categorias")
-public class CategoriaController {
-
+@RequestMapping("api/v1/comunas")
+public class ComunaController {
+    
     @Autowired
-    private CategoriaService categoriaService;
+    private ComunaService comunaService;
 
-    // Retornar lista Categorias
+    // Retornar lista Comunas
     @GetMapping
-    public ResponseEntity<List<CategoriaDTO>> obtenerTodasCategorias() {
-        List<CategoriaDTO> listaCategorias = categoriaService.obtenerTodas();
-        if (listaCategorias.isEmpty()) {
+    public ResponseEntity<List<ComunaDTO>> obtenerTodasComunas() {
+        List<ComunaDTO> listaComunas = comunaService.obtenerTodas();
+        if (listaComunas.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(listaCategorias, HttpStatus.OK);
+        return new ResponseEntity<>(listaComunas, HttpStatus.OK);
     }
 
     // Buscar por id
     @GetMapping("/{id}")
-    public ResponseEntity<CategoriaDTO> obtenerPorId(@PathVariable Integer id) {
+    public ResponseEntity<ComunaDTO> obtenerPorId(@PathVariable Integer id) {
         try {
-            CategoriaDTO categoria = categoriaService.buscarPorId(id);
-            return new ResponseEntity<>(categoria, HttpStatus.OK);
+            ComunaDTO comuna = comunaService.buscarPorId(id);
+            return new ResponseEntity<>(comuna, HttpStatus.OK);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
-    // Guardar nueva categoria
+    // Guardar nueva comuna
     @PostMapping
-    public ResponseEntity<Categoria> guardarcategoria(@RequestBody Categoria categorianueva) {
+    public ResponseEntity<Comuna> guardarcomuna(@RequestBody Comuna comunanueva) {
         try {
-            Categoria guardada = categoriaService.guardar(categorianueva);
+            Comuna guardada = comunaService.guardar(comunanueva);
             return new ResponseEntity<>(guardada, HttpStatus.CREATED);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    // Editar Categoria
+    // Editar Comuna
     @PatchMapping("/{id}")
-    public ResponseEntity<Categoria> editarCategoria(@PathVariable Integer id, @RequestBody Categoria categoria) {
+    public ResponseEntity<Comuna> editarComuna(@PathVariable Integer id, @RequestBody Comuna comuna) {
         try {
-            Categoria editada = categoriaService.guardar(categoria);
+            Comuna editada = comunaService.guardar(comuna);
             return new ResponseEntity<>(editada, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    // actualizar Categoria
+    // actualizar Comuna
     @PutMapping("/{id}")
-    public ResponseEntity<Categoria> actualizarCategoria(@PathVariable Integer id, @RequestBody Categoria categoria) {
+    public ResponseEntity<Comuna> actualizarComuna(@PathVariable Integer id, @RequestBody Comuna comuna) {
         try {
-            Categoria editada = categoriaService.actualizar(id, categoria);
+            Comuna editada = comunaService.actualizar(id, comuna);
             return new ResponseEntity<>(editada, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    // Eliminar categoria
+    // Eliminar comuna
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarCategoria(@PathVariable Integer id) {
-        String resultado = categoriaService.eliminar(id);
+        String resultado = comunaService.eliminar(id);
         if (resultado.contains("exito")) {
             return new ResponseEntity<>(resultado, HttpStatus.OK);
         } else {
@@ -89,13 +90,13 @@ public class CategoriaController {
         }
     }
 
-    // Buscar libros en categoria
-    @GetMapping("/categoria/{categoria}")
-    public ResponseEntity<List<CategoriaDTO>> buscarLibrosEnCategoria(@PathVariable String categoria) {
-        List<CategoriaDTO> listaLibros = categoriaService.buscarLibrosEnCategoria(categoria);
-        if (listaLibros.isEmpty()) {
+    // Buscar bibliotecas en comuna
+    @GetMapping("/{comuna}")
+    public ResponseEntity<List<ComunaDTO>> buscarBibliotecasEnComuna(@PathVariable String biblioteca) {
+        List<ComunaDTO> listabibliotecas = comunaService.buscarBibliotecasEnComuna(biblioteca);
+        if (listabibliotecas.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(listaLibros, HttpStatus.OK);
+        return new ResponseEntity<>(listabibliotecas, HttpStatus.OK);
     }
 }

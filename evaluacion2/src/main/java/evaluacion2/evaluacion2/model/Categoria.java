@@ -1,9 +1,7 @@
 package evaluacion2.evaluacion2.model;
 
 import jakarta.validation.constraints.Size;
-
 import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

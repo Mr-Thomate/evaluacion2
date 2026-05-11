@@ -2,10 +2,8 @@ package evaluacion2.evaluacion2.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import evaluacion2.evaluacion2.dto.EditorialDTO;
 import evaluacion2.evaluacion2.model.Editorial;
 import evaluacion2.evaluacion2.repository.EditorialRepository;
@@ -51,11 +49,15 @@ public class EditorialService {
         return editorialRepository.save(edi);
     }
 
-    public void eliminar(Integer id) {
-        if (!editorialRepository.existsById(id)) {
-            throw new RuntimeException("Error: No se puede eliminar, la editorial ID " + id + " no existe.");
+    public String eliminar(Integer id) {
+        try {
+            Editorial edi = editorialRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Error: No se puede eliminar la editorial, pues no existe."));
+            editorialRepository.delete(edi);
+            return "La editorial " + edi.getNombre() + " ha sido eliminada con exito.";
+        } catch (RuntimeException e) {
+            return e.getMessage();
         }
-        editorialRepository.deleteById(id);
     }
 
     private EditorialDTO convertirADTO(Editorial editorial) {

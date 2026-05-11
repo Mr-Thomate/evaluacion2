@@ -2,10 +2,8 @@ package evaluacion2.evaluacion2.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import evaluacion2.evaluacion2.dto.ContratoDTO;
 import evaluacion2.evaluacion2.model.Contrato;
 import evaluacion2.evaluacion2.model.Empleado;
@@ -66,11 +64,15 @@ public class ContratoService {
         return contratoRepository.save(con);
     }
 
-    public void eliminar(Integer id) {
-        if (!contratoRepository.existsById(id)) {
-            throw new RuntimeException("Error: No se puede eliminar, el contrato ID " + id + " no existe.");
+    public String eliminar(Integer id) {
+        try {
+            Contrato contrato = contratoRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Error: No se encuentra la comuna"));
+            contratoRepository.delete(contrato);
+            return "El contrtato " + contrato.getId() + " ha sido eliminado con exito.";
+        } catch (RuntimeException e) {
+            return e.getMessage();
         }
-        contratoRepository.deleteById(id);
     }
 
     private ContratoDTO convertirADTO(Contrato contrato) {

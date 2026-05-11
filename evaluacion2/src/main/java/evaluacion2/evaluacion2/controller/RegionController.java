@@ -1,18 +1,18 @@
 package evaluacion2.evaluacion2.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import evaluacion2.evaluacion2.dto.RegionDTO;
 import evaluacion2.evaluacion2.model.Region;
 import evaluacion2.evaluacion2.service.RegionService;
@@ -60,6 +60,26 @@ public class RegionController {
             return new ResponseEntity<>("La región ha sido eliminada exitosamente.", HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Region> editarRegion(@PathVariable Integer id, @RequestBody Region region) {
+        try {
+            Region editada = regionService.guardar(region);
+            return new ResponseEntity<>(editada, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Region> actualizarLibro(@PathVariable Integer id, @RequestBody Region region) {
+        try {
+            Region actualizada = regionService.actualizar(id, region);
+            return new ResponseEntity<>(actualizada, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 }

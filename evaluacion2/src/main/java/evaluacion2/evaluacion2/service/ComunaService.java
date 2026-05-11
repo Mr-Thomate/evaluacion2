@@ -2,10 +2,8 @@ package evaluacion2.evaluacion2.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import evaluacion2.evaluacion2.dto.ComunaDTO;
 import evaluacion2.evaluacion2.model.Comuna;
 import evaluacion2.evaluacion2.repository.ComunaRepository;
@@ -26,6 +24,10 @@ public class ComunaService {
         return comunaRepository.findById(id).map(this::convertirADTO).orElseThrow(() -> new RuntimeException("Error: No se encontró la comuna con el ID: " + id));
     }
 
+    public List<ComunaDTO> buscarBibliotecasEnComuna(String nombreBiblioteca){
+        return comunaRepository.findByNombreBiblioteca(nombreBiblioteca).stream().map(this::convertirADTO).collect(Collectors.toList());
+    }
+    
     public Comuna guardar(Comuna comuna) {
         return comunaRepository.save(comuna);
     }

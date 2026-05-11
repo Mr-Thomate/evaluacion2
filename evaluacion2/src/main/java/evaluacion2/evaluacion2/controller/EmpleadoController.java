@@ -1,7 +1,6 @@
 package evaluacion2.evaluacion2.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import evaluacion2.evaluacion2.dto.EmpleadoDTO;
 import evaluacion2.evaluacion2.model.Empleado;
 import evaluacion2.evaluacion2.service.EmpleadoService;
@@ -68,6 +66,7 @@ public class EmpleadoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarEmpleado(@PathVariable Integer id) {
         try {
+            empleadoService.eliminar(id);
             return new ResponseEntity<>("Empleado eliminado con éxito", HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>("Error al eliminar", HttpStatus.NOT_FOUND);

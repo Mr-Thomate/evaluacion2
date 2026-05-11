@@ -1,7 +1,6 @@
 package evaluacion2.evaluacion2.dto;
 
 import java.util.List;
-
 import lombok.Data;
 
 @Data

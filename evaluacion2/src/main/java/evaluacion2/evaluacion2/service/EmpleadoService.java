@@ -2,10 +2,8 @@ package evaluacion2.evaluacion2.service;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import evaluacion2.evaluacion2.dto.EmpleadoDTO;
 import evaluacion2.evaluacion2.model.Empleado;
 import evaluacion2.evaluacion2.repository.EmpleadoRepository;
@@ -28,6 +26,17 @@ public class EmpleadoService {
 
     public Empleado guardar(Empleado nuevoEmpleado) {
         return empleadoRepository.save(nuevoEmpleado);
+    }
+
+    public String eliminar(Integer id) {
+        try {
+            Empleado empleado = empleadoRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Error: No se encuentra el empleado"));
+            empleadoRepository.delete(empleado);
+            return "El empleado " + empleado.getId() + " ha sido eliminado con exito.";
+        } catch (RuntimeException e) {
+            return e.getMessage();
+        }
     }
 
     public Empleado actualizar(Integer id, Empleado empleado) {
